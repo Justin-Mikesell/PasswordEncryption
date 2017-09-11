@@ -25,6 +25,7 @@ namespace PasswordEncryption
             List<string> hashChars = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
                 "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")" };
 
+            // Loops through and adds the uppercase alphabet and the number 0 - 9
             for (; i <= 35; i++)
             {
                 if (i > 25)
@@ -42,11 +43,15 @@ namespace PasswordEncryption
 
             i = 0;
 
+            // encrypts the password
             for (; i < password.Length; i++)
             {
-
+                
+                // checks to ensure the encryption key will stay in range.
                 if (hashChars.IndexOf(password[i].ToString()) + offset > hashChars.Count)
                 {
+                    //if it will go out of bounds this will cause it to wrap back around and start at index 0 and
+                    //count up from there
                     hash += hashChars.IndexOf(password[i].ToString()) + offset;
 
                     hash -= hashChars.Count;
@@ -56,6 +61,7 @@ namespace PasswordEncryption
                     hash = hashChars.IndexOf(password[i].ToString()) + offset;
                 }
 
+                //adds the encrypted char to the string
                 encryptedPassword += hashChars[hash];
                 hash = 0;
             }
